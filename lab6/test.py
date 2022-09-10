@@ -21,7 +21,7 @@ ap.add_argument("-j", "--jobs", type=int, default=-1,
 	help="# of jobs for k-NN distance (-1 uses all available cores)")
 args = vars(ap.parse_args())
 
-def image_to_feature_vector(image, size=(32, 32)):
+def image_to_feature_vector(image, size = (32, 32)):
     	# resize the image to a fixed size, then flatten the image into
 	# a list of raw pixel intensities
 	return cv.resize(image, size).flatten()
@@ -35,8 +35,7 @@ def extract_color_histogram(image, bins=(8, 8, 8)):
 	# handle normalizing the histogram if we are using OpenCV 2.4.X
 	if imutils.is_cv2():
 		hist = cv.normalize(hist)
-	# otherwise, perform "in place" normalization in OpenCV 3 (I
-	# personally hate the way this is done
+	# otherwise, perform "in place" normalization in OpenCV 3 
 	else:
 		cv.normalize(hist, hist)
 	# return the flattened histogram as the feature vector
@@ -73,7 +72,6 @@ for (i, test_images) in enumerate(test_images):
 	t_rawImages.append(pixels)
 	t_features.append(hist)
 	t_labels.append(label)
- 
  
 
 # loop over the input images
