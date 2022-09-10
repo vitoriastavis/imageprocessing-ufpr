@@ -54,21 +54,9 @@ v_rawImages = []
 v_features = []
 v_labels = []
 
-t_path = args["test_dataset"]
-v_path = args["valid_dataset"]
-                                                                                                                                                                                        
-# loop through files of the directory                                                                          
-for filename in os.listdir(t_path):
-
-    
-
-
-
 # loop over the input images
 for (i, test_images) in enumerate(test_images):
     
-	
-
 	# load the image and extract the class label  
 	image = cv.imread(test_images)
 	label = test_images.split(os.path.sep)[-1].split(".")[0]
@@ -144,3 +132,29 @@ print (cm)
 print()
 print(classification_report(v_labels, y_pred))
 print()
+
+
+
+
+print()
+print("------ Evaluating Raw Pixel accuracy WITH GRIDSEARCH------")
+print()
+
+leaf_size = list(range(1,50))
+#n_neighbors = list(range(1,30))
+jobs = [1,2,4]
+n_jobs = (list(jobs))
+hyperparameters = dict(leaf_size = leaf_size, n_jobs = n_jobs)
+knn_2 = KNeighborsClassifier()
+grid = GridSearchCV(knn_2, hyperparameters, cv=10, scoring='accuracy',
+                    return_train_score=False,verbose=1)
+
+best_model_2 = grid.fit(t_rawImages, t_labels)
+
+print()
+print('Best 2 leaf_size:', best_model_2.best_estimator_.get_params()['leaf_size'])
+print('Best 2 jobs:', best_model_2.best_estimator_.get_params()['n_jobs'])
+print('Best 2 n_neighbors:', best_model_2.best_estimator_.get_params()['n_neighbors'])
+
+
+
