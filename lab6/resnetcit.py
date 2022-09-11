@@ -44,16 +44,71 @@ def crop_image(img, height=0, width=0):
     return img
 
 
-for folder in os.listdir(t_path):
+#for folder in os.listdir(t_path):
 
-    print(folder)
+   # print(folder)
 
-    for filename in os.listdir(t_path+folder):
+    #for filename in os.listdir(t_path+folder):
 
-        print(filename)
-        print(t_path+folder+'/'+filename)
-        img = cv.imread(t_path+folder+'/'+filename)
+     #   print(filename)
+      #  print(t_path+folder+'/'+filename)
+       # img = cv.imread(t_path+folder+'/'+filename)
 
-        cut = crop_image(img, 50, 0)
+        #cut = crop_image(img, 50, 0)
 
-        cv.imwrite(t_path+folder+'/'+filename, cut)
+        #cv.imwrite(t_path+folder+'/'+filename, cut)
+
+
+resnet50 = ResNet50()
+
+input_shape = (256, 256, 3)
+batch_size = 32
+#t_path = '/home/vitoria/home/processamento-de-imagens/lab6/Treino'
+#v_path = '/home/vitoria/home/processamento-de-imagens/lab6/Valid'
+
+
+#t_dataset = image_dataset_from_directory(t_path, labels = train_labels, label_mode ='categorical', image_size = (256,256), batch_size=batch_size, color_mode='rgb', shuffle=False)
+#v_dataset = image_dataset_from_directory(v_path, labels = valid_labels, label_mode ='categorical', image_size = (256,256), batch_size=batch_size, color_mode='rgb', shuffle=False)
+
+
+t_dataset = image_dataset_from_directory(t_path,
+                                        image_size = (256,256),
+                                        batch_size = 32, color_mode = 'rgb',
+                                        shuffle = False)
+v_dataset = image_dataset_from_directory(v_path,
+                                        image_size = (256,256),
+                                        batch_size = 32, color_mode = 'rgb',
+                                        shuffle = False)
+cnn = ResNet50(weights = 'imagenet', include_top = False,
+                input_shape = (256, 256, 3))
+inputs = keras.Input(shape = (256, 256, 3))
+x = preprocess_input(inputs)
+x = cnn(x)
+output = GlobalAveragePooling2D()(x)
+model = Model(inputs, output)
+
+model.summary()
+
+x_train = model.predict(t_dataset)
+x_valid = model.predict(v_dataset)
+
+y_train = np.concatenate([y for x, y in t_dataset], axis=0)
+y_valid = np.concatenate([y for x, y in v_dataset], axis=0)
+
+knn = KNeighborsClassifier(n_neighbors = 1, leaf_size = 1, n_jobs = -1)
+knn.fit(x_train, y_train)
+y_pred = knn.predict(x_valid)
+
+#acc = model.score(v_dataset, y_valid)
+acc = accuracy_score(y_valid, y_pred)
+print()
+print("------ Evaluating ResNet50 cut accuracy ------")
+print()
+print("ResNet50 cut accuracy: {:.2f}%".format(acc * 100))
+print()
+cm = confusion_matrix(y_valid, y_pred)
+print (cm)
+print()
+
+print(classification_report(y_valid, y_pred))
+print()
