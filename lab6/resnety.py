@@ -21,8 +21,8 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 
 
-t_path = './cur/Treino/'
-v_path = './cur/Valid/'
+t_path = './resy/Treino/'
+v_path = './resy/Valid/'
 
 
 # loop over the input images
