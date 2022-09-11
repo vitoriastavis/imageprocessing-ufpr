@@ -161,7 +161,6 @@ j = 0
 # loop over the input images
 for filename in test_images:
 
-
     img = cv.imread(filename)
    
     Z = img.reshape((-1,3))
@@ -181,12 +180,12 @@ for filename in test_images:
         mask = cv.inRange(labels, i, i)
         res = cv.bitwise_and(img, np.dstack([mask]*3))
         
-        plt.imsave(nome+'.bmp', mask)
+    plt.imsave(nome+'.jpg', res)
     
     j = j + 1
 
 # loop over the input images
-for filename in valid_images:
+#for filename in valid_images:
 
     image = cv.imread(filename)
    
@@ -198,7 +197,7 @@ for filename in valid_images:
     nome = str(i)
     target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(nome+'.bmp', mask)
+    #plt.imsave(nome+'.bmp', mask)
     
     i = i + 1
 
