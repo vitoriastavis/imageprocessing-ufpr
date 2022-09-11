@@ -173,7 +173,7 @@ for filename in test_images:
     target = cv.bitwise_and(image, image, mask = mask)
     #res = cv.concat([mask, target])
     #segmentation(img, hsv_img, filename , yellow ,yellow)
-    plt.imsave(nome+'.bmp', mask)
+    plt.imsave(nome+'.bmp', target)
     
     i = i + 1
 
@@ -181,19 +181,18 @@ for filename in test_images:
 # loop over the input images
 for filename in valid_images:
 
-
     image = cv.imread(filename)
    
-    #hsv_img = cv.cvtColor(img, cv.COLOR_RGB2HSV)
+    hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
 
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     yellow = np.array([51, 94, 100])
-    mask = cv.inRange(image, (15,217,255), (15,217,255))
+    mask = cv.inRange(hsv_img, (51, 94, 100), (51, 94, 100))
     nome = str(i)
     target = cv.bitwise_and(image, image, mask = mask)
     #res = cv.concat([mask, target])
     #segmentation(img, hsv_img, filename , yellow ,yellow)
-    plt.imsave(nome+'.bmp', mask)
+    plt.imsave(nome+'.bmp', target)
     
     i = i + 1
 
