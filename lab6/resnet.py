@@ -15,10 +15,6 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 
-# current directory
-directory = os.getcwd()  
-
-
 resnet50 = ResNet50()
 
 input_shape = (256, 256, 3)
@@ -28,7 +24,6 @@ batch_size = 32
 
 t_path = './Treino/'
 v_path = './Valid/'
-
 
 #t_dataset = image_dataset_from_directory(t_path, labels = train_labels, label_mode ='categorical', image_size = (256,256), batch_size=batch_size, color_mode='rgb', shuffle=False)
 #v_dataset = image_dataset_from_directory(v_path, labels = valid_labels, label_mode ='categorical', image_size = (256,256), batch_size=batch_size, color_mode='rgb', shuffle=False)

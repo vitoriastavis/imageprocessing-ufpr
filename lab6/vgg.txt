@@ -1,0 +1,67 @@
+2022-09-11 09:36:38.585002: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-09-11 09:36:38.585071: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-09-11 09:36:56.517183: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: UNKNOWN ERROR (100)
+2022-09-11 09:36:56.517254: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (DESKTOP-76VCMV1): /proc/driver/nvidia/version does not exist
+2022-09-11 09:36:56.519135: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Found 253 files belonging to 6 classes.
+Found 106 files belonging to 6 classes.
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_3 (InputLayer)        [(None, 256, 256, 3)]     0         
+                                                                 
+ tf.__operators__.getitem (S  (None, 256, 256, 3)      0         
+ licingOpLambda)                                                 
+                                                                 
+ tf.nn.bias_add (TFOpLambda)  (None, 256, 256, 3)      0         
+                                                                 
+ vgg16 (Functional)          (None, 8, 8, 512)         14714688  
+                                                                 
+ flatten (Flatten)           (None, 32768)             0         
+                                                                 
+=================================================================
+Total params: 14,714,688
+Trainable params: 14,714,688
+Non-trainable params: 0
+_________________________________________________________________
+1/8 [==>...........................] - ETA: 38s2/8 [======>.......................] - ETA: 29s3/8 [==========>...................] - ETA: 25s4/8 [==============>...............] - ETA: 19s5/8 [=================>............] - ETA: 15s6/8 [=====================>........] - ETA: 10s7/8 [=========================>....] - ETA: 5s 8/8 [==============================] - ETA: 0s8/8 [==============================] - 40s 5s/step
+1/4 [======>.......................] - ETA: 15s2/4 [==============>...............] - ETA: 9s 3/4 [=====================>........] - ETA: 5s4/4 [==============================] - ETA: 0s4/4 [==============================] - 17s 4s/step
+/home/vitoria/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/vitoria/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/vitoria/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+------ Evaluating VGG accuracy ------
+
+VGG accuracy: 35.85%
+
+[[12  0  4 19  0  0]
+ [ 2  0  6  3  0  0]
+ [ 5  0 11  7  2  0]
+ [ 2  0  2  9  0  0]
+ [ 0  0  2  5  5  0]
+ [ 2  0  0  7  0  1]]
+
+              precision    recall  f1-score   support
+
+           0       0.52      0.34      0.41        35
+           1       0.00      0.00      0.00        11
+           2       0.44      0.44      0.44        25
+           3       0.18      0.69      0.29        13
+           4       0.71      0.42      0.53        12
+           5       1.00      0.10      0.18        10
+
+    accuracy                           0.36       106
+   macro avg       0.48      0.33      0.31       106
+weighted avg       0.47      0.36      0.35       106
+
+
+------ Evaluating VGG accuracy WITH GRIDSEARCH------
+
+Traceback (most recent call last):
+  File "vgg_grid.py", line 82, in <module>
+    best_model_2 = grid.fit(x_train, y_train)
+NameError: name 'x_train' is not defined

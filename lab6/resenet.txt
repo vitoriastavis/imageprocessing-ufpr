@@ -1,0 +1,65 @@
+2022-09-10 15:26:59.623193: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-09-10 15:26:59.623235: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-09-10 15:27:00.852686: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: UNKNOWN ERROR (100)
+2022-09-10 15:27:00.852729: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (DESKTOP-76VCMV1): /proc/driver/nvidia/version does not exist
+2022-09-10 15:27:00.853006: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Found 253 files belonging to 6 classes.
+Found 106 files belonging to 6 classes.
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_3 (InputLayer)        [(None, 256, 256, 3)]     0         
+                                                                 
+ tf.__operators__.getitem (S  (None, 256, 256, 3)      0         
+ licingOpLambda)                                                 
+                                                                 
+ tf.nn.bias_add (TFOpLambda)  (None, 256, 256, 3)      0         
+                                                                 
+ resnet50 (Functional)       (None, 8, 8, 2048)        23587712  
+                                                                 
+ global_average_pooling2d (G  (None, 2048)             0         
+ lobalAveragePooling2D)                                          
+                                                                 
+=================================================================
+Total params: 23,587,712
+Trainable params: 23,534,592
+Non-trainable params: 53,120
+_________________________________________________________________
+1/8 [==>...........................] - ETA: 19s2/8 [======>.......................] - ETA: 13s3/8 [==========>...................] - ETA: 11s4/8 [==============>...............] - ETA: 9s 5/8 [=================>............] - ETA: 6s6/8 [=====================>........] - ETA: 4s7/8 [=========================>....] - ETA: 2s8/8 [==============================] - ETA: 0s8/8 [==============================] - 19s 2s/step
+1/4 [======>.......................] - ETA: 7s2/4 [==============>...............] - ETA: 4s3/4 [=====================>........] - ETA: 2s4/4 [==============================] - ETA: 0s4/4 [==============================] - 8s 2s/step
+
+------ Evaluating ResNet50 accuracy ------
+
+ResNet50 accuracy: 50.00%
+
+[[18  1  8  4  3  1]
+ [ 0  8  1  1  0  1]
+ [ 9  2 10  4  0  0]
+ [ 2  2  2  7  0  0]
+ [ 4  0  4  0  4  0]
+ [ 0  2  2  0  0  6]]
+
+              precision    recall  f1-score   support
+
+           0       0.55      0.51      0.53        35
+           1       0.53      0.73      0.62        11
+           2       0.37      0.40      0.38        25
+           3       0.44      0.54      0.48        13
+           4       0.57      0.33      0.42        12
+           5       0.75      0.60      0.67        10
+
+    accuracy                           0.50       106
+   macro avg       0.53      0.52      0.52       106
+weighted avg       0.51      0.50      0.50       106
+
+
+
+------ Evaluating ResNet50 accuracy WITH GRIDSEARCH------
+
+Fitting 10 folds for each of 147 candidates, totalling 1470 fits
+
+Best 2 leaf_size: 1
+Best 2 jobs: 1
+Best 2 n_neighbors: 5
