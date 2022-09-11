@@ -168,7 +168,7 @@ for filename in test_images:
 
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     yellow = np.array([51, 94, 100])
-    mask = cv.inRange(image, (14,216,254), (16,218,255))
+    mask = cv.inRange(image, (15,217,255), (15,217,255))
     nome = str(i)
     target = cv.bitwise_and(image, image, mask = mask)
     #res = cv.concat([mask, target])
