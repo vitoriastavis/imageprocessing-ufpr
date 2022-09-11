@@ -65,8 +65,7 @@ resnet50 = ResNet50()
 row = 256
 column = 256
 input_shape = (row, column, 3)
-batch_size = 256
-
+batch_size = 32
 #t_path = '/home/vitoria/home/processamento-de-imagens/lab6/Treino'
 #v_path = '/home/vitoria/home/processamento-de-imagens/lab6/Valid'
 
@@ -99,7 +98,7 @@ x_valid = model.predict(v_dataset)
 y_train = np.concatenate([y for x, y in t_dataset], axis=0)
 y_valid = np.concatenate([y for x, y in v_dataset], axis=0)
 
-knn = KNeighborsClassifier(n_neighbors = 1)
+knn = KNeighborsClassifier(n_neighbors = 1, leaf_size = 1, n_jobs = -1)
 knn.fit(x_train, y_train)
 y_pred = knn.predict(x_valid)
 
