@@ -164,7 +164,7 @@ for filename in test_images:
 
     image = cv.imread(filename)
    
-    #hsv_img = cv.cvtColor(img, cv.COLOR_RGB2HSV)
+    hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
 
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     yellow = np.array([51, 94, 100])
