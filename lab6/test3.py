@@ -157,25 +157,33 @@ v_labels = []
 
         #cv.imwrite(t_path+folder+'/'+filename, cut)
 
-i = 0
+j = 0
 # loop over the input images
 for filename in test_images:
 
 
-    image = cv.imread(filename)
+    img = cv.imread(filename)
    
-    hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+    Z = img.reshape((-1,3))
 
-    #yellow = (51, 94, 100)  #rgb(255, 217, 15)
-    yellow = np.array([51, 94, 100])
-    mask = cv.inRange(hsv_img, (50,100,100),(60,12,100))
-    nome = str(i)
-    target = cv.bitwise_and(hsv_img, hsv_img, mask = mask) 
+    # convert to np.float32
+    Z = np.float32(Z)
     
-    plt.imsave(nome+'.bmp', mask)    
+    # define criteria, number of clusters(K) and apply kmeans()
+    criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+    K = 4
+    ret,labels,centers = cv.kmeans(Z, K, None, criteria, 10, cv.KMEANS_RANDOM_CENTERS)
+    labels = labels.reshape((img.shape[:-1]))
     
-    i = i + 1
-
+    nome = str(j)
+    
+    for i, c in enumerate(centers):
+        mask = cv.inRange(labels, i, i)
+        res = cv.bitwise_and(img, np.dstack([mask]*3))
+        
+        plt.imsave(nome+'.bmp', mask)
+    
+    j = j + 1
 
 # loop over the input images
 for filename in valid_images:
