@@ -163,16 +163,17 @@ for filename in test_images:
 
 
     image = cv.imread(filename)
-   
     hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
-
-    #yellow = (51, 94, 100)  #rgb(255, 217, 15)
-    yellow = np.array([51, 94, 100])
-    mask = cv.inRange(hsv_img, (50,100,100),(60,12,100))
+    cor = np.uint8([[[255, 217, 15]]])
+    cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
+     
+    light = np.array([20,100,50])
+    dark = np.array([40,255,255])
+    mask = cv.inRange(hsv_img, light, dark)
     nome = str(i)
-    target = cv.bitwise_and(hsv_img, hsv_img, mask = mask) 
+    target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    #plt.imsave(nome+'.bmp', mask)    
+    plt.imsave(nome+'.bmp', target)    
     
     i = i + 1
 
@@ -185,7 +186,7 @@ for filename in valid_images:
     hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
     cor = np.uint8([[[255, 217, 15]]])
     cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
-    print(cor_hsv)
+   
     # 25 240 255
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     light = np.array([20,100,50])
@@ -194,7 +195,7 @@ for filename in valid_images:
     nome = str(i)
     target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(nome+'.bmp', mask)
+    plt.imsave(nome+'.bmp', target)
     
     i = i + 1
 
