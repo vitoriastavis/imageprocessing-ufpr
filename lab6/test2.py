@@ -174,7 +174,7 @@ for filename in test_images:
     nome = str(i)
     target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(nome+'.jpg', mask)    
+    plt.imsave(filename, mask)    
     
     i = i + 1
 
@@ -196,7 +196,7 @@ for filename in valid_images:
     nome = str(i)
     target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(nome+'.jpg', mask)
+    plt.imsave(filename, mask)
     
     i = i + 1
 
