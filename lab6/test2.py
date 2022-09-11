@@ -10,33 +10,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import hsv_to_rgb
 
-def segmentation(img, hsv_img, out_name, l_green, d_green):
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-t", "--test_dataset", required=True,
+	help="path to input test dataset")
+ap.add_argument("-v", "--valid_dataset", required=True,
+	help="path to input validation dataset")
+ap.add_argument("-k", "--neighbors", type=int, default=1,
+	help="# of nearest neighbors for classification")
+ap.add_argument("-j", "--jobs", type=int, default=-1,
+	help="# of jobs for k-NN distance (-1 uses all available cores)")
+args = vars(ap.parse_args())
 
-    # quadrado das cores para plotar
-    lg_square = np.full((10,10,3), l_green, dtype = np.uint8)/255.0
-    dg_square = np.full((10,10,3), d_green, dtype = np.uint8)/255.0
-
-    # plot das cores
-    plt.subplot(1,2,1)
-    plt.imshow(hsv_to_rgb(lg_square))
-    plt.subplot(1,2,2)
-    plt.imshow(hsv_to_rgb(dg_square))
-    plt.show()
-
-    # cria mascara para segmentar
-    mask = cv.inRange(hsv_img, d_green, l_green)
-
-    result = cv.bitwise_and(img, img, mask = mask)
-
-    # plot da mascara e da imagem segmentada
-    plt.subplot(1, 2, 1)
-    plt.imshow(mask, cmap = 'gray')
-    plt.subplot(1, 2, 2)
-    plt.imshow(result)
-    plt.show()
-
-    # salva imagem segmentada
-    plt.imsave(out_name, result)
 
 def crop_image(img, height=0, width=0):
 
@@ -58,42 +43,6 @@ def crop_image(img, height=0, width=0):
     img = img[0:h_crop, 0:w_crop]
 
     return img
-
-def color_graph(img, hsv_img):
-
-    # separar cores para fazer grafico
-    pixel_colors = img.reshape((np.shape(img)[0]*np.shape(img)[1], 3))
-    norm = colors.Normalize(vmin = -1., vmax = 1.)
-    norm.autoscale(pixel_colors)
-    pixel_colors = norm(pixel_colors).tolist()
-
-    # separar hue saturation e value
-    h, s, v = cv.split(hsv_img)
-
-    fig = plt.figure()
-    axis = fig.add_subplot(1, 1, 1, projection = '3d')
-
-    # grafico das cores
-    axis.scatter(h.flatten(), s.flatten(), v.flatten(), facecolors=pixel_colors, marker = '.')
-    axis.set_xlabel('hue')
-    axis.set_ylabel('saturation')
-    axis.set_zlabel('value')
-    plt.show()
-
-    return (h, s, v)
-
-
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-t", "--test_dataset", required=True,
-	help="path to input test dataset")
-ap.add_argument("-v", "--valid_dataset", required=True,
-	help="path to input validation dataset")
-ap.add_argument("-k", "--neighbors", type=int, default=1,
-	help="# of nearest neighbors for classification")
-ap.add_argument("-j", "--jobs", type=int, default=-1,
-	help="# of jobs for k-NN distance (-1 uses all available cores)")
-args = vars(ap.parse_args())
 
 def image_to_feature_vector(image, size = (32, 32)):
     	# resize the image to a fixed size, then flatten the image into
@@ -131,21 +80,21 @@ v_features = []
 v_labels = []
 
 
-#for filename in test_images:
+for filename in test_images:
 
-#    print(filename)   
-#    img = cv.imread(filename)
-#    cut = crop_image(img, 50, 0)
+    print(filename)   
+    img = cv.imread(filename)
+    cut = crop_image(img, 50, 0)
 
-    #cv.imwrite(filename, cut)
+    cv.imwrite(filename, cut)
 
-#for filename in valid_images:
+for filename in valid_images:
 
  #   print(filename)
-  #  img = cv.imread(filename)
-   # cut = crop_image(img, 50, 0)
+    img = cv.imread(filename)
+    cut = crop_image(img, 50, 0)
 
-    #cv.imwrite(filename, cut)
+    cv.imwrite(filename, cut)
 
     #for filename in os.listdir(t_path+folder):
 
@@ -157,48 +106,47 @@ v_labels = []
 
         #cv.imwrite(t_path+folder+'/'+filename, cut)
 
-i = 0
+#i = 0
 # loop over the input images
-for filename in test_images:
+#for filename in test_images:
 
-
-    image = cv.imread(filename)
-    hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
-    cor = np.uint8([[[255, 217, 15]]])
-    cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
+ #   image = cv.imread(filename)
+  #  hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+   # cor = np.uint8([[[255, 217, 15]]])
+    #cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
    
   
-    light = np.array([20,100,50])
-    dark = np.array([40,255,255])
-    mask = cv.inRange(hsv_img, light, dark)
-    nome = str(i)
-    target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
+    #light = np.array([20,100,50])
+    #dark = np.array([40,255,255])
+    #mask = cv.inRange(hsv_img, light, dark)
+    #nome = str(i)
+    #target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(filename, mask)    
+    #plt.imsave(filename, mask)    
     
-    i = i + 1
+    #i = i + 1
 
 
 # loop over the input images
-for filename in valid_images:
+#for filename in valid_images:
 
-    image = cv.imread(filename)
+ #   image = cv.imread(filename)
    
-    hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
-    cor = np.uint8([[[255, 217, 15]]])
-    cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
+  #  hsv_img = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+   # cor = np.uint8([[[255, 217, 15]]])
+    #cor_hsv = cv.cvtColor(cor, cv.COLOR_RGB2HSV)
    
     # 25 240 255
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
-    light = np.array([20,100,50])
-    dark = np.array([40,255,255])
-    mask = cv.inRange(hsv_img, light, dark)
-    nome = str(i)
-    target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
+    #light = np.array([20,100,50])
+    #dark = np.array([40,255,255])
+    #mask = cv.inRange(hsv_img, light, dark)
+    #nome = str(i)
+    #target = cv.bitwise_and(hsv_img, hsv_img, mask = mask)  
     
-    plt.imsave(filename, mask)
+  #  plt.imsave(filename, mask)
     
-    i = i + 1
+   # i = i + 1
 
 # loop over the input images
 for (i, test_images) in enumerate(test_images):
