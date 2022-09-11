@@ -157,7 +157,7 @@ v_labels = []
 
         #cv.imwrite(t_path+folder+'/'+filename, cut)
 
-
+i = 0
 # loop over the input images
 for filename in test_images:
 
@@ -166,10 +166,13 @@ for filename in test_images:
     img = cv.cvtColor(image, cv.COLOR_BGR2RGB)
     hsv_img = cv.cvtColor(img, cv.COLOR_RGB2HSV)
 
-    yellow = (51, 94, 100)  #rgb(255, 217, 15)
-
-    segmentation(img, hsv_img, filename , yellow ,yellow)
-
+    #yellow = (51, 94, 100)  #rgb(255, 217, 15)
+    yellow = np.array([51, 94, 100])
+    mask = cv.inRange(hsv_img, yellow, yellow)
+    nome = str(i)
+    #segmentation(img, hsv_img, filename , yellow ,yellow)
+    plt.imsave(nome+'.bmp', mask)
+    i = i + 1
 
 
 # loop over the input images
