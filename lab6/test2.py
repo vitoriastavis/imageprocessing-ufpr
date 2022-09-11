@@ -168,12 +168,12 @@ for filename in test_images:
 
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     yellow = np.array([51, 94, 100])
-    mask = cv.inRange(image, (60, 100, 100), (50, 100, 100))
+    mask = cv.inRange(image, (51, 94, 100), (51, 94, 100))
     nome = str(i)
     target = cv.bitwise_and(image, image, mask = mask)
     #res = cv.concat([mask, target])
     #segmentation(img, hsv_img, filename , yellow ,yellow)
-    plt.imsave(nome+'.bmp', target)
+    plt.imsave(nome+'.bmp', mask)
     
     i = i + 1
 
@@ -187,12 +187,12 @@ for filename in valid_images:
 
     #yellow = (51, 94, 100)  #rgb(255, 217, 15)
     yellow = np.array([51, 94, 100])
-    mask = cv.inRange(hsv_img, (60, 100, 100), (50, 100, 100))
+    mask = cv.inRange(hsv_img, (51, 94, 100), (51, 94, 100))
     nome = str(i)
     target = cv.bitwise_and(image, image, mask = mask)
     #res = cv.concat([mask, target])
     #segmentation(img, hsv_img, filename , yellow ,yellow)
-    plt.imsave(nome+'.bmp', target)
+    plt.imsave(nome+'.bmp', mask)
     
     i = i + 1
 
